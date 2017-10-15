@@ -50,7 +50,7 @@ void doop(const int op, int a, int b, int c){
 		case 5:	//mod
 			((int*)mem)[c] = ((int*)mem)[a] % ((int*)mem)[b];
 			#ifdef DEBUGMODE
-				printf("\t%i = %i % %i\n", ((int*)mem)[c], oga, ogb);
+				printf("\t%i = %i %% %i\n", ((int*)mem)[c], oga, ogb);
 			#endif
 		break;
 		case 6:	//and
@@ -155,7 +155,8 @@ int main(int argc, char ** argv){
 	}
 	mem = malloc(memsize);
 	fread(mem, 1, filesize, f);
-	if(f)fclose(f); f = 0;
+	if(f)fclose(f);
+	f = 0;
 	memset(mem + filesize, 0, memsize - filesize);
 	executionloop();
 	//dump output
@@ -170,6 +171,7 @@ int main(int argc, char ** argv){
 			fwrite(mem, i*4, 1, f);
 		} else printf("no bytes to write\n");
 	}
-	if(mem) free(mem); mem = 0;
+	if(mem) free(mem);
+	mem = 0;
 	return FALSE;
 }
