@@ -6,19 +6,19 @@ const4: 4
 
 i: 0
 count: 1024 //1000000
-t1: 0
-t2: 0
-t3: 0
 outputptr: output
 
 ipstart:
 //set up pointers
+
+//really dumb hack here, i just changed the old pointers from data on "the heap" to point directly into the add
+//technically that is how you are supposed to do it, but whatever
 add outputptr i t1
 add t1 const1 t2
 add t2 const1 t3
 
 //add and put
-addPPP t1 t2 t3
+add t1: 0 t2: 0 t3: 0
 
 add i const1 i
 tg count i t1
