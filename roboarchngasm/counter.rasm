@@ -1,0 +1,22 @@
+ipstart
+ipstartptr: ipstart
+const0: 0
+const1: 1
+const4: 4
+
+i: 0
+count: 10
+testout: 0
+
+ipstart:
+add const1 i i
+tg count i testout
+mult testout const4 testout
+add testout 0 0 // skip next instruction (4 words)  if i < count
+//reset IP to -4 so it halts
+sub const0 const4 0
+
+
+//jump back to start of program (ipstart -4 so it gets set to ipstart)
+sub ipstartptr const4 0
+

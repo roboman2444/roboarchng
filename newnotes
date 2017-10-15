@@ -1,0 +1,58 @@
+like roboarch, but some differences
+
+
+
+- no pointer dereferencing
+- instructions are simpler now
+
+
+So in order to index in an array, someone would do something like this
+Array: 0 0 0 0 0 0 0 0 0 0
+I: 0
+
+add Array I Pointer
+DOSOMETHING Pointer: 0 otherthing output
+
+
+or something like pointer++ would look like this
+
+
+
+Array: 0 0 0 0 0
+
+CONST1: 1
+
+add CONST1 Pointer Pointer
+DOSOMETHING Pointer: 0 otherthing output
+
+
+
+
+
+This makes for a much simpler VM, and also much simpler pipeline design (can be a 4 stage pipeline if you have 2 memory read units and 1 memory write unit)
+
+Assembler mods
+- asm hardcoded words such as NEXTA, NEXTB, NEXTC for input 1, input 2, output of the following instruction
+	- currently, following and previous instruction must be directly after current one for this to work, offset fuckery might be worked on later
+	-plan for this is to keep a list of op locations and a list of hardcode locations, and then pick and choose
+
+
+
+
+PLANNED:
+
+- keep track of source locations (where every label is, where every address points to)
+	- will be useful for the debugger, error statements in compiler
+- basic debugger
+- TEST CASES MAN
+- asm hardcoded words such as HERE?????
+- asm basic arithmatic, such as (5+4)
+- asm relative label offset, like (label-4), or (HERE+4) or (HERE+ANYWHERE+4) if you wanna get freaky
+- asm constants, just put a * in front of something and it add the constant to the CONST section //todo const section. Eg add *4 label label, to add the constant 4 to label, or add *(label + 8) label label to add a constant of label+8 somewhere
+
+
+So indexing into an array is simpler
+
+
+add CONST1 Array NEXTA
+DOSOMETHING 0 label output // NEXTA points to "0"
