@@ -207,7 +207,11 @@ int parseword(char * word){
 		return writeres;
 	}
 
-	if(ISALPHA(tword[0])){
+	if(string_testEqualN(word,"0x", 2)){ //hex value
+		errno = 0;
+		writeres = strtol(word, NULL, 0);
+	}
+	else if(ISALPHA(tword[0])){
 		if(tword[sz-1] == ':'){
 			if(addlabel(tword, curplace)) printf("parsed %s as label to %i or 0x%08x\n", tword, curplace, curplace);
 			else printf("error, label %s already exists\n", tword);
@@ -218,12 +222,8 @@ int parseword(char * word){
 		putdata(-1, curplace);
 		curplace++;
 		return sz;
-	}
+	} else errno = 1;
 
-	errno = 1;
-	if(string_testEqualN(word,"0x", 2)){ //hex value
-		writeres = strtol(word, NULL, 0);
-	}
 /*	if(errno){
 		errno = 0;
 		writeres = strtof(word, NULL) + 1.0;
